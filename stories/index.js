@@ -10,6 +10,8 @@ import DayListItem from "../src/components/DayListItem";
 import DayList from "../src/components/DayList";
 import InterviewerListItem from "../src/components/InterviewerListItem";
 import InterviewerList from "../src/components/InterviewerList";
+import Appointment from "components/Appointment/index.js";
+import Header from "../src/components/Appointment/Header";
 
 storiesOf("Button", module)
   .addParameters({
@@ -98,5 +100,17 @@ storiesOf("InterviewerList", module)
     backgrounds: [{ name: "dark", value: "#222f3e", default: true }],
   })
   .add("Initial", () => <InterviewerList interviewers={interviewers} />)
-  .add("Selected", () => <InterviewerList interviewers={interviewers} interviewer={3} />)
-  .add("Clickable", () => <InterviewerList interviewers={interviewers} setInterviewer={action("setInterviewer")} />);
+  .add("Selected", () => <InterviewerList interviewers={interviewers} value={3} />)
+  .add("Clickable", () => <InterviewerList interviewers={interviewers} onChange={action("setInterviewer")} />);
+
+// Appointment
+
+storiesOf("Appointment", module)
+  .addParameters({
+    backgrounds: [{ name: "white", value: "#fff", default: true }],
+  })
+  .add("Appointment", () => <Appointment />)
+  .add("Appointment with Time", () => <Appointment time="12pm" />)
+  // Appointmnet/Header - <Header> component is a child of our <Appointment> component, its stories should be chained to the <Appointment> stories.
+  .add("Appointment with Time", () => <Appointment time="12pm" />)
+  .add("Header", () => <Appointment time="12pm" />);

@@ -12,6 +12,8 @@ import InterviewerListItem from "../src/components/InterviewerListItem";
 import InterviewerList from "../src/components/InterviewerList";
 import Appointment from "components/Appointment/index.js";
 import Header from "../src/components/Appointment/Header";
+import Empty from "../src/components/Appointment/Empty";
+import Show from "../src/components/Appointment/Show";
 
 storiesOf("Button", module)
   .addParameters({
@@ -111,6 +113,12 @@ storiesOf("Appointment", module)
   })
   .add("Appointment", () => <Appointment />)
   .add("Appointment with Time", () => <Appointment time="12pm" />)
+
   // Appointmnet/Header - <Header> component is a child of our <Appointment> component, its stories should be chained to the <Appointment> stories.
-  .add("Appointment with Time", () => <Appointment time="12pm" />)
-  .add("Header", () => <Appointment time="12pm" />);
+  .add("Header", () => <Header time="12pm" />)
+
+  // Appointmnet/Empty - <Empty> component is a child of our <Appointment> component,
+  .add("Empty", () => <Empty onAdd={action("onAdd")} />)
+
+  // Appointmnet/Show - <Show> component is a child of our <Appointment> component,
+  .add("Show", () => <Show student="Lydia Miller-Jones" interviewer={interviewers[0]} onEdit={action("onEdit")} onDelete={action("onDelete")} />);

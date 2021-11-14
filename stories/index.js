@@ -14,6 +14,7 @@ import Appointment from "components/Appointment/index.js";
 import Header from "../src/components/Appointment/Header";
 import Empty from "../src/components/Appointment/Empty";
 import Show from "../src/components/Appointment/Show";
+import Confirm from "../src/components/Appointment/Confirm";
 
 storiesOf("Button", module)
   .addParameters({
@@ -121,4 +122,7 @@ storiesOf("Appointment", module)
   .add("Empty", () => <Empty onAdd={action("onAdd")} />)
 
   // Appointmnet/Show - <Show> component is a child of our <Appointment> component,
-  .add("Show", () => <Show student="Lydia Miller-Jones" interviewer={interviewers[0]} onEdit={action("onEdit")} onDelete={action("onDelete")} />);
+  .add("Show", () => <Show student="Lydia Miller-Jones" interviewer={interviewers[0]} onEdit={action("onEdit")} onDelete={action("onDelete")} />)
+
+  // Appointmnet/Confirm - <Confirm> component is a child of our <Appointment> component,
+  .add("Confirm", () => <Confirm message={"Delete the Appointment?"} onConfirm={action("onConfirm")} onCancel={action("onCancel")} />);

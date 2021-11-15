@@ -16,6 +16,8 @@ import Empty from "../src/components/Appointment/Empty";
 import Show from "../src/components/Appointment/Show";
 import Confirm from "../src/components/Appointment/Confirm";
 import Status from "../src/components/Appointment/Status";
+import Error from "../src/components/Appointment/Error";
+import Form from "../src/components/Appointment/Form";
 
 storiesOf("Button", module)
   .addParameters({
@@ -129,4 +131,23 @@ storiesOf("Appointment", module)
   .add("Confirm", () => <Confirm message={"Delete the Appointment?"} onConfirm={action("onConfirm")} onCancel={action("onCancel")} />)
 
   // Appointmnet/Status - <Status> component is a child of our <Appointment> component,
-  .add("Status", () => <Status message={"Deleting"} />);
+  .add("Status", () => <Status message={"Deleting"} />)
+
+  // Appointmnet/Error - <Error> component is a child of our <Appointment> component,
+  .add("Error", () => <Error message={"Could not delete appointment."} onClose={action("onClose")} />)
+
+  //***************************** */
+  // FORM Component - Edit Story
+  .add("Edit", () => (
+    <Form
+      student={"T.J. Blinn"}
+      interviewer={1}
+      interviewers={interviewers}
+      onSave={action("onSave")}
+      onCancel={action("onCancel")}
+      onChange={action("onChange")}
+    />
+  ))
+
+  // FORM Component - Create Story
+  .add("Create", () => <Form interviewers={interviewers} onSave={action("onSave")} onCancel={action("onCancel")} onChange={action("onChange")} />);

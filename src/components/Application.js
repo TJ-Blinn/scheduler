@@ -45,14 +45,21 @@ const appointments = {
     time: "4pm",
   },
 };
-
 // end of Mock Data
 
 export default function Application(props) {
-  const [day, setDay] = useState("Monday");
-  console.log("day console log: ", day);
+  const [state, setState] = useState({
+    day: "Monday",
+    days: [],
+    appointments: {},
+  });
 
-  const [days, setDays] = useState([]);
+  // Aliasing Actions
+  const setDay = (day) => setState({ ...state, day });
+
+  const setDays = (days) => {
+    setState((prev) => ({ ...prev, days }));
+  };
 
   useEffect(() => {
     axios.get("http://localhost:8001/api/days").then((response) => {
@@ -70,7 +77,7 @@ export default function Application(props) {
         <img className="sidebar--centered" src="images/logo.png" alt="Interview Scheduler" />
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
-          <DayList days={days} value={day} onChange={setDay} />
+          <DayList days={state.days} value={state.day} onChange={setDay} />
         </nav>
         <img className="sidebar__lhl sidebar--centered" src="images/lhl.png" alt="Lighthouse Labs" />
       </section>

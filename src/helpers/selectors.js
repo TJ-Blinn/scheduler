@@ -34,8 +34,8 @@ export function getAppointmentsForDay(state, dayName) {
 - return an object that contains the interview data
 - return a new object containing the interview data
 - get student name
+// the "interview" parameter passed to the getInterview function = { student: "Archie Cohen", interviewer: 2 }
 */
-// { student: "Archie Cohen", interviewer: 2 }
 
 export function getInterview(state, interview) {
   if (!interview) {
@@ -49,12 +49,6 @@ export function getInterview(state, interview) {
   result.interviewer = { ...state.interviewers[interviewerId] };
 
   console.log("Results: ", result);
-
-  // const result = {};
-  // const interviewersObj = state.interviewers;
-
-  // const interviewFound = interviewersObj.find((interviewObj) => interviewObj.id === interview);
-  // console.log("InterviewFound ---------", interviewFound);
 
   return result;
 }

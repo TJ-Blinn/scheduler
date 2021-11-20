@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
@@ -150,4 +150,20 @@ storiesOf("Appointment", module)
   ))
 
   // FORM Component - Create Story
-  .add("Create", () => <Form interviewers={interviewers} onSave={action("onSave")} onCancel={action("onCancel")} onChange={action("onChange")} />);
+  .add("Create", () => <Form interviewers={interviewers} onSave={action("onSave")} onCancel={action("onCancel")} onChange={action("onChange")} />)
+
+  // Appointment Empty
+  .add("Appointment Empty", () => (
+    <Fragment>
+      <Appointment id={5} time="4pm" />
+      <Appointment id="last" time="5pm" />
+    </Fragment>
+  ))
+
+  // Appointment Show - Our <Appointment> component will only render the <Show> component if props.interview is truthy
+  .add("Appointment Booked", () => (
+    <Fragment>
+      <Appointment id={5} time="4pm" interview={{ student: "Lydia Miller-Jones", interviewer }} />
+      <Appointment id="last" time="5pm" />
+    </Fragment>
+  ));

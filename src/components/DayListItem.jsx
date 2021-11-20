@@ -12,11 +12,8 @@ import classNames from "classnames";
 
 
 export default function DayListItem(props) {
-  // console.log(props);
+  
   const {spots} = props
-  // console.log(spots);
-  // console.log(name);
-  // console.log(selected);
 
   function formatSpots(spots) {
     if (spots === 1) {

@@ -3,16 +3,7 @@ import classNames from "classnames";
 import "./InterviewerListItem.scss"
 
 export default function InterviewerListItem(props) {
-  console.log("PROPS -----------------", props);
-
-  // function name(params) {
-  //   let name = {props.name}
-  //   if (props.selected = true) {
-  //     return {name}
-  //   }
-    
-  // }
-
+  // console.log("PROPS -----------------", props);
 
   const InterviewerClass = classNames("interviewers__item", {
     " interviewers__item-image": props.avatar,
@@ -20,7 +11,7 @@ export default function InterviewerListItem(props) {
   });
 
   return (
-    <li className={InterviewerClass} onClick={()=> props.setInterviewer(props.id)}>
+    <li className={InterviewerClass} onClick={props.setInterviewer}>
       <img
       className="interviewers__item-image"
       src={props.avatar}

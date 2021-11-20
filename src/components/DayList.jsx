@@ -7,14 +7,15 @@ import DayListItem from "./DayListItem";
 export default function DayList(props) {
   // const {day, days, setDay} = props;
   // props.day | refers to the props in the storybook index.js DayList component
+  // console.log("PROPS DAYS +============", props.days);
   const daysComponent = props.days.map(day => {
-    console.log("---------------", day);
+    // console.log("DAY---------------", day);
     return <DayListItem
     key={day.id}
     name={day.name}
     spots={day.spots}
     selected={day.name === props.value}
-    setDay={() => props.onChange(props.name)}
+    setDay={props.onChange}
      />
   })
 

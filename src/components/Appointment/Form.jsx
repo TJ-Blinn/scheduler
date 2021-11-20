@@ -11,7 +11,7 @@ export default function Form(props) {
 const reset= () => {
   setStudent("");
   setInterviewer(null);
-  console.log("Handle reset from Form component");  
+  // console.log("Handle reset from Form component");  
 }
 
 const cancel =() => {

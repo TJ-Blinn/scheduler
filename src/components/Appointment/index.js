@@ -6,7 +6,7 @@ import Show from "./Show";
 import Empty from "./Empty";
 
 export default function Appointment(props) {
-  console.log("Appointment props ------- ", props);
+  // console.log("Appointment props ------- ", props);
   // const appointmentString = () => {
   //   if (props.time) {
   //     return `Appointment at ${props.time}`;

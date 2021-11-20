@@ -4,6 +4,15 @@
 // for each day's appt id
 // add matching appt to results
 
+/*
+  an empty array is created called result
+  created a variable with value of the state.days array (accessing days inside state obj)
+  creating a variable, dayFound obj, iterates over says to find the matching day
+  creating a var appointmentIds, a list of ids found inside the dayFound obj (the spoecific day that matches the parameter) 
+  iterate over 
+
+  */
+
 export function getAppointmentsForDay(state, dayName) {
   const result = [];
   const days = state.days;
@@ -19,12 +28,33 @@ export function getAppointmentsForDay(state, dayName) {
   }
 
   return result;
-  /*
-  an empty array is created called result
-  created a variable with value of the state.days array (accessing days inside state obj)
-  creating a variable, dayFound obj, iterates over says to find the matching day
-  creating a var appointmentIds, a list of ids found inside the dayFound obj (the spoecific day that matches the parameter) 
-  iterate over 
+}
+/*
+- it is passed an object ( interviewers)  that contains an interviewer
+- return an object that contains the interview data
+- return a new object containing the interview data
+- get student name
+*/
+// { student: "Archie Cohen", interviewer: 2 }
 
-  */
+export function getInterview(state, interview) {
+  if (!interview) {
+    return null;
+  }
+  const result = {};
+  const studentName = interview.student;
+  const interviewerId = interview.interviewer;
+
+  result.student = studentName;
+  result.interviewer = { ...state.interviewers[interviewerId] };
+
+  console.log("Results: ", result);
+
+  // const result = {};
+  // const interviewersObj = state.interviewers;
+
+  // const interviewFound = interviewersObj.find((interviewObj) => interviewObj.id === interview);
+  // console.log("InterviewFound ---------", interviewFound);
+
+  return result;
 }

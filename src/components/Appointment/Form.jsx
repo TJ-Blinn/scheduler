@@ -35,8 +35,8 @@ const cancel =() => {
     </form>
     <InterviewerList
     interviewers={props.interviewers} 
-    interviewer={props.interviewer}
-    onChange={props.onChange}
+    interviewer={interviewer}
+    onChange={setInterviewer}
       /* your code goes here */
     />
   </section>

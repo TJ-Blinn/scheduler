@@ -12,13 +12,12 @@ export default function useVisualMode(initial) {
   function transition(mode, replace = false) {
     if (replace) {
       const newHistory = [...history];
-      console.log(newHistory);
+
       const indexOfLast = newHistory.length - 1;
       newHistory[indexOfLast] = mode;
-      console.log(newHistory);
+
       setMode(mode);
       setHistory([...newHistory]);
-      console.log("History -----", history);
     } else {
       setMode(mode);
       setHistory([...history, mode]);

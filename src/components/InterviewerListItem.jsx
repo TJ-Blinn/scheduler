@@ -5,8 +5,7 @@ import "./InterviewerListItem.scss"
 export default function InterviewerListItem(props) {
   // console.log("PROPS -----------------", props);
 
-  const InterviewerClass = classNames("interviewers__item", {
-    " interviewers__item-image": props.avatar,
+  const InterviewerClass = classNames("interviewers__item", {   
     " interviewers__item--selected": props.selected
   });
 

@@ -48,7 +48,29 @@ export function getInterview(state, interview) {
   result.student = studentName;
   result.interviewer = { ...state.interviewers[interviewerId] };
 
-  console.log("Results: ", result);
+  // console.log("Results: ", result);
+
+  return result;
+}
+
+// getInterviewersForDay selector
+
+export function getInterviewersForDay(state, dayName) {
+  const result = [];
+  const { days } = state;
+
+  const dayFound = days.find((day) => day.name === dayName);
+
+  if (dayFound) {
+    const interviewerIds = dayFound.interviewers;
+
+    for (let interviewerID of interviewerIds) {
+      const interview = state.interviewers[interviewerID];
+      result.push(interview);
+    }
+  }
+
+  console.log("selector =========", result);
 
   return result;
 }

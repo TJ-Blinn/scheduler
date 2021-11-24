@@ -14,6 +14,28 @@ export default function Application(props) {
     appointments: {},
   });
 
+  // change the local state when we book an interview
+
+  function bookInterview(id, interview) {
+    console.log("appointment details", id, interview);
+
+    // new appointment object with values copied from the existing appointment.
+    const appointment = {
+      ...state.appointments[id],
+      interview,
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment,
+    };
+
+    setState({
+      ...state,
+      appointments,
+    });
+  }
+
   // hold a list of appointments for that day.
   const dailyAppointments = getAppointmentsForDay(state, state.day);
 
@@ -29,17 +51,24 @@ export default function Application(props) {
       setState((prev) => ({ ...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data }));
     });
   }, []);
-  // console.log(dailyAppointments);
-  console.log("state ----------", state);
+  // console.log("state ----------", state);
 
   const appointmentList = dailyAppointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
-    // console.log("interview +++++++++++ ", interview);
 
     // holds the array of interviewerIDs for a given day.
     const interviewers = getInterviewersForDay(state, state.day);
 
-    return <Appointment key={appointment.id} id={appointment.id} time={appointment.time} interview={interview} interviewers={interviewers} />;
+    return (
+      <Appointment
+        key={appointment.id}
+        id={appointment.id}
+        time={appointment.time}
+        interview={interview}
+        interviewers={interviewers}
+        bookInterview={(appointmentID, newInterview) => bookInterview(appointmentID, newInterview)}
+      />
+    );
   });
 
   return (

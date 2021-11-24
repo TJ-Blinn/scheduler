@@ -70,7 +70,7 @@ export function getInterviewersForDay(state, dayName) {
     }
   }
 
-  console.log("selector =========", result);
+  // console.log("selector =========", result);
 
   return result;
 }

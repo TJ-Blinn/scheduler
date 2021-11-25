@@ -22,17 +22,22 @@ export default function Application(props) {
     // new appointment object with values copied from the existing appointment.
     const appointment = {
       ...state.appointments[id],
-      interview,
+      interview: { ...interview },
     };
 
-    const appointments = {
+    const newAppointments = {
       ...state.appointments,
       [id]: appointment,
     };
 
-    setState({
-      ...state,
-      appointments,
+    // const interviewersAPI = ``;
+    return axios.put(`http://localhost:8001/api/appointments/${id}`, { interview }).then((response) => {
+      console.log("AXIOS PUT call ======", response);
+
+      setState({
+        ...state,
+        appointments: newAppointments,
+      });
     });
   }
 
@@ -55,10 +60,11 @@ export default function Application(props) {
 
   const appointmentList = dailyAppointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
+    console.log("interview content -----", interview);
 
     // holds the array of interviewerIDs for a given day.
     const interviewers = getInterviewersForDay(state, state.day);
-
+    console.log("Interviewers --------", interviewers);
     return (
       <Appointment
         key={appointment.id}
@@ -66,7 +72,7 @@ export default function Application(props) {
         time={appointment.time}
         interview={interview}
         interviewers={interviewers}
-        bookInterview={(appointmentID, newInterview) => bookInterview(appointmentID, newInterview)}
+        bookInterview={bookInterview}
       />
     );
   });

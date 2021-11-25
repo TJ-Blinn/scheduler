@@ -14,11 +14,9 @@ export default function Application(props) {
     appointments: {},
   });
 
-  // change the local state when we book an interview
+  // Book an interview
 
   function bookInterview(id, interview) {
-    console.log("appointment details", id, interview);
-
     // new appointment object with values copied from the existing appointment.
     const appointment = {
       ...state.appointments[id],
@@ -40,6 +38,36 @@ export default function Application(props) {
       });
     });
   }
+
+  // Cancel an interview
+  // use the appointment id to find the right appointment slot and set it's interview data to null.
+  function cancelInterview(id) {
+    // find appointments id | remove interview obj
+
+    const appointment = {
+      ...state.appointments[id],
+      interview: null,
+    };
+
+    const newAppointments = {
+      ...state.appointments,
+      [id]: appointment,
+    };
+
+    // const interviewersAPI = ``;
+    return axios.delete(`http://localhost:8001/api/appointments/${id}`).then((response) => {
+      console.log("AXIOS DELETE call ======", response);
+
+      setState({
+        ...state,
+        appointments: newAppointments,
+      });
+    });
+  }
+
+  // function delete(name, interview) {
+
+  // }
 
   // hold a list of appointments for that day.
   const dailyAppointments = getAppointmentsForDay(state, state.day);
@@ -73,6 +101,7 @@ export default function Application(props) {
         interview={interview}
         interviewers={interviewers}
         bookInterview={bookInterview}
+        cancelInterview={cancelInterview}
       />
     );
   });
@@ -87,7 +116,11 @@ export default function Application(props) {
         </nav>
         <img className="sidebar__lhl sidebar--centered" src="images/lhl.png" alt="Lighthouse Labs" />
       </section>
-      <section className="schedule">{appointmentList}</section>
+      <section className="schedule">
+        {appointmentList}
+        {/* ! Appointment component is hard-coded to work-around the 5pm slot not showing on render */}
+        <Appointment time={"5pm"} key={"last"} />
+      </section>
     </main>
   );
 }

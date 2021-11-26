@@ -11,16 +11,18 @@ export default function useVisualMode(initial) {
   // replace is a Default Parameter to set default value for parameter
   function transition(mode, replace = false) {
     if (replace) {
-      const newHistory = [...history];
+      setHistory((prev) => [...prev.slice(0, prev.length - 1), mode]);
 
-      const indexOfLast = newHistory.length - 1;
-      newHistory[indexOfLast] = mode;
+      // const newHistory = [...history];
+      // const indexOfLast = newHistory.length - 1;
+      // newHistory[indexOfLast] = mode;
 
       setMode(mode);
-      setHistory([...newHistory]);
+      // setHistory([...newHistory]);
     } else {
+      // setHistory([...history, mode]);
+      setHistory((prev) => [...prev, mode]);
       setMode(mode);
-      setHistory([...history, mode]);
     }
   }
 
@@ -28,10 +30,7 @@ export default function useVisualMode(initial) {
   function back() {
     // [0, 1, 2, 3]
     // history.length - 2
-    // history = array of modes
-    // history = ["create", "show", "delete", "view"]
-    // const indexOfPrevious = history.length - 2;
-    // setMode(history[indexOfPrevious])
+    // history = array of modes | Ex: ["create", "show", "delete", "view"]
     if (history.length > 1) {
       history.pop();
       const indexOfPrevious = history.length - 1;

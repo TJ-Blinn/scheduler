@@ -7,8 +7,9 @@ import Empty from "./Empty";
 import Form from "./Form";
 import Status from "./Status";
 import Confirm from "./Confirm";
+import Error from "./Error";
 import useVisualMode from "hooks/useVisualMode";
-import { getInterviewersForDay } from "helpers/selectors";
+// import { getInterviewersForDay } from "helpers/selectors";
 
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
@@ -17,7 +18,9 @@ const SAVING = "SAVING";
 const DELETING = "DELETING";
 const CONFIRM = "CONFIRM";
 const EDIT = "EDIT";
+
 const ERROR_SAVE = "ERROR_SAVE";
+const ERROR_DELETE = "ERROR_DELETE";
 
 export default function Appointment(props) {
   // Conditional Expressions using Fragments o render <Show> or <Empty> based on props.interview.
@@ -32,10 +35,13 @@ export default function Appointment(props) {
     };
 
     transition(SAVING);
-
-    props.bookInterview(props.id, newInterview).then(() => {
-      transition(SHOW);
-    });
+    console.log("Save function --------", save);
+    props
+      .bookInterview(props.id, newInterview)
+      .then(() => {
+        transition(SHOW);
+      })
+      .catch((error) => transition(ERROR_SAVE, true));
     // .catch(() => {
     //   transition(ERROR_SAVE, true);
     // });
@@ -43,20 +49,16 @@ export default function Appointment(props) {
 
   // --------------Delete
   function deleteAppointment() {
-    transition(DELETING);
-    props.cancelInterview(props.id).then(() => {
-      transition(EMPTY);
-    });
-  }
-  // --------------
-
-  // -------------- EDIT
-  function editAppointment() {
-    console.log("Edit Appointment function", props.id, props.interview);
-    transition(CREATE);
-    props.editInterview(props.id, props.interview).then(() => {
-      transition(SHOW);
-    });
+    transition(DELETING, true);
+    props
+      .cancelInterview(props.id)
+      .then(() => {
+        transition(EMPTY);
+      })
+      .catch((error) => {
+        console.log("Delete Error message: ", error);
+        transition(ERROR_DELETE, true);
+      });
   }
   // --------------
 
@@ -72,26 +74,28 @@ export default function Appointment(props) {
             student={props.interview && props.interview.student}
             interviewer={(props.interview && props.interview.interviewer) || {}}
             onDelete={() => transition(CONFIRM)}
-            onEdit={() => transition(CREATE)}
+            onEdit={() => transition(EDIT)}
           />
         )}
 
-        {mode === CREATE && (
+        {mode === CREATE && <Form interviewers={props.interviewers} onCancel={() => back()} onSave={save} />}
+
+        {mode === CONFIRM && <Confirm onCancel={() => back()} onConfirm={deleteAppointment} message={"Are you sure you would like to Delete?"} />}
+
+        {mode === EDIT && (
           <Form
+            onSave={save}
             interviewers={props.interviewers}
             onCancel={() => back()}
-            onSave={save}
             student={props.interview && props.interview.student}
             interviewer={props.interview && props.interview.interviewer}
           />
         )}
 
-        {mode === CONFIRM && <Confirm onCancel={() => back()} onConfirm={deleteAppointment} message={"Are you sure you would like to Delete?"} />}
-
-        {mode === EDIT && <Form save={() => save(props.id, props.newInterview)} />}
-
         {mode === SAVING && <Status message={SAVING} />}
+        {mode === ERROR_SAVE && <Error message={"Error saving appointment"} onClose={() => back()} />}
         {mode === DELETING && <Status message={DELETING} />}
+        {mode === ERROR_DELETE && <Error message={"Error deleting appointment"} onClose={() => back()} />}
       </article>
     </>
   );

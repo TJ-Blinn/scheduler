@@ -12,7 +12,7 @@ useApplicationData Hook will returns:
 
 export default function useApplicationData(initial) {
   const [state, setState] = useState({
-    day: "Monday",
+    day: "Tuesday",
     days: [],
     appointments: {},
   });
@@ -31,6 +31,17 @@ export default function useApplicationData(initial) {
       [id]: appointment,
     };
 
+    const newDays = [];
+    state.days.forEach((dayObj) => {
+      if (dayObj.name === state.day) {
+        console.log(dayObj.name, ":", dayObj.spots);
+        console.log("selected day = : ", state.day);
+        newDays.push({ ...dayObj, spots: dayObj.spots - 1 });
+      } else {
+        newDays.push({ ...dayObj });
+      }
+    });
+
     // const interviewersAPI = ``;
     return axios.put(`http://localhost:8001/api/appointments/${id}`, { interview }).then((response) => {
       // console.log("AXIOS PUT call ======", response);
@@ -38,6 +49,7 @@ export default function useApplicationData(initial) {
       setState({
         ...state,
         appointments: newAppointments,
+        days: newDays,
       });
     });
   }
@@ -56,6 +68,17 @@ export default function useApplicationData(initial) {
       ...state.appointments,
       [id]: appointment,
     };
+    // updateSpots();
+    const newDays = [];
+    state.days.forEach((dayObj) => {
+      if (dayObj.name === state.day) {
+        console.log(dayObj.name, ":", dayObj.spots);
+        console.log("selected day = : ", state.day);
+        newDays.push({ ...dayObj, spots: dayObj.spots + 1 });
+      } else {
+        newDays.push({ ...dayObj });
+      }
+    });
 
     // const interviewersAPI = ``;
     return axios.delete(`http://localhost:8001/api/appointments/${id}`).then((response) => {
@@ -64,12 +87,14 @@ export default function useApplicationData(initial) {
       setState({
         ...state,
         appointments: newAppointments,
+        days: newDays,
       });
     });
   }
 
   const setDay = (day) => setState({ ...state, day });
 
+  // API calls
   useEffect(() => {
     Promise.all([
       axios.get("http://localhost:8001/api/days"),
@@ -80,6 +105,16 @@ export default function useApplicationData(initial) {
       setState((prev) => ({ ...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data }));
     });
   }, []);
+
+  // After adding/removing an appointment, update # of spots remaining for each day
+  // function updateSpots() {
+
+  // }
+
+  // if (state.days[0]) {
+  //   console.log("State.days ======== 1 ", state.days[0]);
+  //   console.log("State.days ======== 1 - spots", state.days[0].spots);
+  // }
 
   return { bookInterview, cancelInterview, setDay, state, setState };
 }

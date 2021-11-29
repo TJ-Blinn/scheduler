@@ -9,7 +9,6 @@ import Status from "./Status";
 import Confirm from "./Confirm";
 import Error from "./Error";
 import useVisualMode from "hooks/useVisualMode";
-// import { getInterviewersForDay } from "helpers/selectors";
 
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
@@ -23,11 +22,9 @@ const ERROR_SAVE = "ERROR_SAVE";
 const ERROR_DELETE = "ERROR_DELETE";
 
 export default function Appointment(props) {
-  // Conditional Expressions using Fragments o render <Show> or <Empty> based on props.interview.
-
   const { mode, transition, back } = useVisualMode(props.interview ? SHOW : EMPTY);
 
-  // pass this func to Form component. Form capture the name and interviewer and pass them to props.onSave as arguments
+  // pass to Form component. Form capture the name and interviewer and pass them to props.onSave as arguments
   function save(name, interviewer) {
     const newInterview = {
       student: name,
@@ -35,16 +32,13 @@ export default function Appointment(props) {
     };
 
     transition(SAVING);
-    console.log("Save function --------", save);
+
     props
       .bookInterview(props.id, newInterview)
       .then(() => {
         transition(SHOW);
       })
       .catch((error) => transition(ERROR_SAVE, true));
-    // .catch(() => {
-    //   transition(ERROR_SAVE, true);
-    // });
   }
 
   // --------------Delete
@@ -56,14 +50,11 @@ export default function Appointment(props) {
         transition(EMPTY);
       })
       .catch((error) => {
-        console.log("Delete Error message: ", error);
+        // console.log("Delete Error message: ", error);
         transition(ERROR_DELETE, true);
       });
   }
-  // --------------
 
-  // console.log("APPOINTMENT PROPS", props);
-  // console.log("//////////", props.interview);
   return (
     <>
       <article className="appointment">
@@ -88,7 +79,7 @@ export default function Appointment(props) {
             interviewers={props.interviewers}
             onCancel={() => back()}
             student={props.interview && props.interview.student}
-            interviewer={props.interview && props.interview.interviewer}
+            interviewer={props.interview && props.interview.interviewer.id}
           />
         )}
 

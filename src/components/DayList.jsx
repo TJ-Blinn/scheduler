@@ -5,11 +5,9 @@ import DayListItem from "./DayListItem";
 // components which can be rendered in the <ul> of our <DayList> (use the .map method). 
 
 export default function DayList(props) {
-  // const {day, days, setDay} = props;
-  // props.day | refers to the props in the storybook index.js DayList component
-  // console.log("PROPS DAYS +============", props.days);
+  
   const daysComponent = props.days.map(day => {
-    // console.log("DAY---------------", day);
+    
     return <DayListItem
     key={day.id}
     name={day.name}

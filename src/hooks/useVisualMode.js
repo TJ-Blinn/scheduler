@@ -18,9 +18,7 @@ export default function useVisualMode(initial) {
       // newHistory[indexOfLast] = mode;
 
       setMode(mode);
-      // setHistory([...newHistory]);
     } else {
-      // setHistory([...history, mode]);
       setHistory((prev) => [...prev, mode]);
       setMode(mode);
     }

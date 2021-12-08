@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 
 import {
   render,
@@ -8,7 +9,9 @@ import {
   prettyDOM,
   debug,
   getByText,
+  getByTestId,
   queryByText,
+  queryByAltText,
   getAllByTestId,
   getByAltText,
   getByPlaceholderText,
@@ -107,5 +110,56 @@ describe("Application", () => {
     const day = getAllByTestId(container, "day").find((day) => queryByText(day, "Monday"));
 
     expect(getByText(day, "2 spots remaining")).toBeInTheDocument();
+  });
+
+  it("loads data, edits an interview and keeps the spots remaining for Monday the same", async () => {
+    // 1. Render the Application.
+    const { container, debug } = render(<Application />);
+
+    // 2. Wait until the text "Archie Cohen" is displayed.
+    await waitForElement(() => getByText(container, "Archie Cohen"));
+    //console.log(prettyDOM(container));
+
+    // 3. Click the "Edit" button on the booked appointment.
+    const appointment = getAllByTestId(container, "appointment").find((appointment) => queryByText(appointment, "Archie Cohen"));
+
+    fireEvent.click(queryByAltText(appointment, "Edit"));
+    // 4. Check that the form appears with student name appearing and interviewer selected.
+    // await waitForElement(() => {
+    //   expect(container.getByTestId("student-name-input").value, "Archie Cohen");
+    // });
+
+    // console.log(container.getByTestId("student-name-input"));
+
+    console.log(prettyDOM(container));
+
+    // 5. Type in the input field and change the name.
+    fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
+      target: { value: "Lydia Miller-Jones" },
+    });
+
+    // 6. Click the "Save" button on the confirmation.
+    fireEvent.click(getByText(appointment, "Save"));
+
+    // 7. Check that the element with the text "SAVING" is displayed.
+    expect(getByText(appointment, /saving/i)).toBeInTheDocument();
+
+    // 8. Wait until the appointment appears with new content.
+    await waitForElement(() => getByText(appointment, "Lydia Miller-Jones"));
+
+    // 9. Check that the DayListItem with the text "Monday" also has the text "1 spots remaining".
+    const day = getAllByTestId(container, "day").find((day) => queryByText(day, "Monday"));
+    // console.log(prettyDOM(appointment));
+    // console.log(prettyDOM(day));
+    expect(getByText(day, /1 spot remaining/i)).toBeInTheDocument();
+  });
+
+  // ERROR HANDLING: revert to the default behaviour after the single request that this test generates is complete.
+  it("shows the save error when failing to save an appointment", () => {
+    axios.put.mockRejectedValueOnce();
+  });
+
+  it("shows the delete error when failing to deelte an appointment", () => {
+    axios.delete.mockRejectedValueOnce();
   });
 });

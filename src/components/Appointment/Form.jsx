@@ -22,11 +22,16 @@ const cancel =() => {
 const [error, setError] = useState("");
 
 function validate() {
-  console.log("Validate function  HERE ----------");
+  // console.log("Validate function  HERE ----------");
   if (student === "") {
     setError("Student name cannot be blank");
     return;
   }
+  if (interviewer === null) {
+    setError("Interviewer cannot be blank");
+    return;
+  }
+
   setError("");
   props.onSave(student, interviewer);
 }
@@ -59,7 +64,8 @@ function validate() {
     <section className="appointment__actions">
       <Button danger onClick={cancel} >Cancel</Button>
       {/* <Button confirm onClick={() => props.onSave(student, interviewer)}  >Save</Button>              */}
-    <Button confirm onClick={() => validate()}  >Save</Button>
+    {/* <Button confirm onClick={() => validate()}  >Save</Button> */}
+    <Button confirm onClick={() => validate()} disabled={interviewer ? false : true} >Save</Button>
     </section>
   </section>
 </main>

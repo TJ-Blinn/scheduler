@@ -1,21 +1,17 @@
-// import React from "react";
 import DayList from "./DayList";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Appointment from "./Appointment";
-import axios from "axios";
 import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
-
 import useApplicationData from "../hooks/useApplicationData";
-
 import "components/Application.scss";
 
 export default function Application(props) {
-  const { bookInterview, cancelInterview, setDay, state, setState, updateSpots } = useApplicationData();
+  const { bookInterview, cancelInterview, setDay, state } = useApplicationData();
 
   // holds the array of interviewerIDs for a given day.
   const interviewers = getInterviewersForDay(state, state.day);
 
-  // hold a list of appointments for that day.
+  // holds a list of appointments for that day.
   const dailyAppointments = getAppointmentsForDay(state, state.day);
 
   const appointmentList = dailyAppointments.map((appointment) => {

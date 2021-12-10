@@ -1,5 +1,4 @@
-import React, { Fragment, useState } from "react";
-
+import React from "react";
 import "./styles.scss";
 import Header from "./Header";
 import Show from "./Show";
@@ -50,7 +49,6 @@ export default function Appointment(props) {
         transition(EMPTY);
       })
       .catch((error) => {
-        // console.log("Delete Error message: ", error);
         transition(ERROR_DELETE, true);
       });
   }

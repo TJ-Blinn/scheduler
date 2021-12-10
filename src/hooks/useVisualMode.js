@@ -1,6 +1,6 @@
 // Custom hooks to seperate logic from rendering of components.
 // need to keep track of the history of the modes, so we can go backwards.
-import Appointment from "components/Appointment";
+// import Appointment from "components/Appointment";
 import { useState } from "react";
 
 export default function useVisualMode(initial) {

@@ -1,5 +1,5 @@
 import React from "react";
-import InterviewerList from "../InterviewerList"
+// import InterviewerList from "../InterviewerList"
 
 // * styles is referenced in stories/index.js file, we don't need to import it again
 

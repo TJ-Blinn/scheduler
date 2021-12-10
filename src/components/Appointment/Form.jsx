@@ -7,7 +7,6 @@ import Button from "components/Button";
 export default function Form(props) {
   const [student, setStudent] = useState(props.student || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
-// console.log("Interviewer in Form component ////////", interviewer);
 
 const reset= () => {
   setStudent("");
@@ -22,7 +21,7 @@ const cancel =() => {
 const [error, setError] = useState("");
 
 function validate() {
-  // console.log("Validate function  HERE ----------");
+  
   if (student === "") {
     setError("Student name cannot be blank");
     return;
@@ -57,14 +56,12 @@ function validate() {
     interviewers={props.interviewers} 
     interviewer={interviewer}
     onChange={setInterviewer}
-      /* your code goes here */
+      
     />
   </section>
   <section className="appointment__card-right">
     <section className="appointment__actions">
-      <Button danger onClick={cancel} >Cancel</Button>
-      {/* <Button confirm onClick={() => props.onSave(student, interviewer)}  >Save</Button>              */}
-    {/* <Button confirm onClick={() => validate()}  >Save</Button> */}
+      <Button danger onClick={cancel} >Cancel</Button>      
     <Button confirm onClick={() => validate()} disabled={interviewer ? false : true} >Save</Button>
     </section>
   </section>

@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 /*
-useApplicationData Hook will returns:
-
+useApplicationData Hook will return:
     The state object maintains the same structure.
     The setDay action used to set the current day.
     The bookInterview makes an HTTP request and updates the local state.
@@ -34,8 +33,6 @@ export default function useApplicationData(initial) {
     const newDays = [];
     state.days.forEach((dayObj) => {
       if (dayObj.name === state.day) {
-        // console.log(dayObj.name, ":", dayObj.spots);
-        // console.log("selected day = : ", state.day);
         newDays.push({ ...dayObj, spots: state.appointments[id].interview ? dayObj.spots : dayObj.spots - 1 });
       } else {
         newDays.push({ ...dayObj });
@@ -69,8 +66,6 @@ export default function useApplicationData(initial) {
     const newDays = [];
     state.days.forEach((dayObj) => {
       if (dayObj.name === state.day) {
-        // console.log(dayObj.name, ":", dayObj.spots);
-        // console.log("selected day = : ", state.day);
         newDays.push({ ...dayObj, spots: dayObj.spots + 1 });
       } else {
         newDays.push({ ...dayObj });
@@ -91,7 +86,6 @@ export default function useApplicationData(initial) {
   // API calls
   useEffect(() => {
     Promise.all([axios.get("/api/days"), axios.get("/api/appointments"), axios.get("/api/interviewers")]).then((all) => {
-      // console.log(all); //
       setState((prev) => ({ ...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data }));
     });
   }, []);

@@ -2,7 +2,6 @@ import React from "react";
 import DayListItem from "./DayListItem";
 
 // iterate over the days array and use its data to create a new array of <DayListItem>
-// components which can be rendered in the <ul> of our <DayList> (use the .map method). 
 
 export default function DayList(props) {
   

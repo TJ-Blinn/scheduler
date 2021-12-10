@@ -1,9 +1,5 @@
 // Recall that it is npm run test to start the Jest testing environment.
 
-// find day obj in days arr (state.days)
-// for each day's appt id
-// add matching appt to results
-
 export function getAppointmentsForDay(state, dayName) {
   const result = [];
   const days = state.days;

@@ -2,15 +2,6 @@ import React from "react";
 import "./DayListItem.scss";
 import classNames from "classnames";
 
-// The <li> represents the entire day item
-// The <h2> should display the day name
-// The <h3> should display the spots remaining for a day
-
-// DayList Item is requiring arguments passed into it called "props'"
-// we then destructuring the spots parameter which was passed the singular values of spots
-// taking out spots arguments from the list of arguments "props" (in the DayListItem function)
-
-
 export default function DayListItem(props) {
   
   const {spots} = props
@@ -33,6 +24,7 @@ export default function DayListItem(props) {
     " day-list__item--selected": props.selected,
   });  
   
+  // The <li> represents the entire day item | <h2> displays day name | <h3> displays spots remaining for a day
   return (
     <li className={dayClass} data-testid="day" onClick={() => props.setDay(props.name)}>
       <h2 className="text--regular">{props.name}</h2>

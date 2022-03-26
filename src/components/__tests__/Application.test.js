@@ -26,6 +26,13 @@ xit("renders without crashing", () => {
   render(<Application />);
 });
 
+// ASAYNC - wait for fake API request to complete before confirming that data ("Monday") has loaded
+it("defaults to Monday and changes the schedule when a new day is selected", () => {
+  const { getByText } = render(<Application />);
+
+  return waitForElement(() => getByText("Monday"));
+});
+
 // it("changes the schedule when a new day is selected", () => {
 //   const { getByText } = render(<Application />);
 
@@ -131,7 +138,7 @@ describe("Application", () => {
 
     // console.log(container.getByTestId("student-name-input"));
 
-    console.log(prettyDOM(container));
+    // console.log(prettyDOM(container));
 
     // 5. Type in the input field and change the name.
     fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
